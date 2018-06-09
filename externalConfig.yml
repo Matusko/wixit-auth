@@ -1,0 +1,13 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    properties.hibernate.temp.use_jdbc_metadata_defaults: false
+  datasource:
+    url: jdbc:postgresql://ecs-spring-boot-test.czp7uinatifp.eu-west-1.rds.amazonaws.com:5432/ecs_spring_boot
+    username: matusko
+    password: sdfj1d2f8
+  redis:
+    host: 127.0.0.1
+    port: 6379

@@ -1,0 +1,181 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+
+
+Description: >
+  This template shows how to use AWS CodePipeline and AWS CodeBuild to build an
+  automated continuous deployment pipeline to Amazon Elastic Container Service
+  (Amazon ECS) using clusters powered by AWS Fargate or Amazon Elastic Compute
+  Cloud (Amazon EC2).
+
+
+Parameters:
+  VpcId:
+    Type: String
+    Description: Vpc Id
+
+  Subnets:
+    Type: String
+    Description: List of subnets ids
+
+  LoadBalancerArn:
+    Type: String
+    Description: Arn of load balancer
+
+  LoadBalancerSourceSecurityGroup:
+    Type: String
+    Description: Id of security group to access load balancer
+
+  DatabaseEndpoint:
+    Type: String
+    Description: Endpoint for rds postgresql database
+
+  DatabasePort:
+     Type: String
+     Description: Port for rds postgresql database
+
+  DBMasterUserName:
+    Type: String
+    Default: matusko
+    Description: Master name for rds postgresql database
+
+  DBMasterPassword:
+    Type: String
+    Description: Password for rds postgresql database master
+    NoEcho: true
+
+  GitHubUser:
+    Type: String
+    Default: Matusko
+    Description: Your username on GitHub.
+
+  GitHubRepo:
+    Type: String
+    Default: ecs-spring-boot
+    Description: The repo name of the sample service.
+
+  GitHubBranch:
+    Type: String
+    Default: master
+    Description: The branch of the repo to continuously deploy.
+
+  GitHubToken:
+    Type: String
+    NoEcho: true
+    Description: >
+      Token for the user specified above. (https://github.com/settings/tokens)
+
+  TemplateBucket:
+    Type: String
+    Default: ec2-spring-boot-cloudformation-stack
+    Description: >
+      The S3 bucket from which to fetch the templates used by this stack.
+
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterLabels:
+      VpcId:
+        default: "Vpc id"
+      Subnets:
+        default: "Subnet ids"
+      LoadBalancerArn:
+        default: "Load Balancer ARN"
+      LoadBalancerSourceSecurityGroup:
+        default: "Id of security group to access load balancer"
+      DatabaseEndpoint:
+        default: "Database endpoint"
+      DatabasePort:
+        default: "Database port"
+      DBMasterUserName:
+        default: "Database Master Name"
+      DBMasterPassword:
+        default: "Database Master Password"
+      GitHubUser:
+        default: "User"
+      GitHubRepo:
+        default: "Repo"
+      GitHubBranch:
+        default: "Branch"
+      GitHubToken:
+        default: "Personal Access Token"
+    ParameterGroups:
+      - Label:
+          default: Vpc params
+        Parameters:
+          - VpcId
+          - Subnets
+      - Label:
+          default: Load Balancer params
+        Parameters:
+          - LoadBalancerArn
+          - LoadBalancerSourceSecurityGroup
+      - Label:
+          default: Database Configuration
+        Parameters:
+          - DatabaseEndpoint
+          - DatabasePort
+          - DBMasterUserName
+          - DBMasterPassword
+      - Label:
+          default: GitHub Configuration
+        Parameters:
+          - GitHubRepo
+          - GitHubBranch
+          - GitHubUser
+          - GitHubToken
+      - Label:
+          default: Stack Configuration
+        Parameters:
+          - TemplateBucket
+
+
+Resources:
+  Cluster:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/microservice-templates/ecs-cluster.yaml"
+      Parameters:
+        SourceSecurityGroup: !Ref LoadBalancerSourceSecurityGroup
+        Subnets: !Ref Subnets
+        VpcId: !Ref VpcId
+
+  DeploymentPipeline:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/microservice-templates/deployment-pipeline.yaml"
+      Parameters:
+        Cluster: !GetAtt Cluster.Outputs.ClusterName
+        Service: !GetAtt Service.Outputs.Service
+        GitHubUser: !Ref GitHubUser
+        GitHubToken: !Ref GitHubToken
+        GitHubRepo: !Ref GitHubRepo
+        GitHubBranch: !Ref GitHubBranch
+        DatabaseEndpoint: !Ref DatabaseEndpoint
+        DatabasePort: !Ref DatabasePort
+        DBMasterUserName: !Ref DBMasterUserName
+        DBMasterPassword: !Ref DBMasterPassword
+
+  LoadBalancerListener:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/microservice-templates/load-balancer-listener.yaml"
+      Parameters:
+        VpcId: !Ref VpcId
+        LoadBalancerArn: !Ref LoadBalancerArn
+
+  Service:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/microservice-templates/service.yaml"
+      Parameters:
+        Cluster: !GetAtt Cluster.Outputs.ClusterName
+        TargetGroup: !GetAtt LoadBalancerListener.Outputs.TargetGroup
+        SourceSecurityGroup: !Ref LoadBalancerSourceSecurityGroup
+        Subnets: !Ref Subnets
+
+
+Outputs:
+  PipelineUrl:
+    Description: The continuous deployment pipeline in the AWS Management Console.
+    Value: !GetAtt DeploymentPipeline.Outputs.PipelineUrl
