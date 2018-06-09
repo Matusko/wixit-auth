@@ -445,8 +445,6 @@ Resources:
                   done
                 - echo "Updating template configurtion files to use the appropriate values"
                 - |
-                  chmod +x cloudformation/stackset/assemble-microservice-params.sh
-                  ./cloudformation/stackset/assemble-microservice-params.sh $ENVIRONMENT_STACK_NAME
                   for conf in $CONFIG_FILES; do
                     echo "Replacing placeholders in $conf"
                     sed -i -e "s/DB_MASTER_USER_NAME_PLACEHOLDER/$DB_MASTER_USER_NAME/" $conf
@@ -463,6 +461,9 @@ Resources:
                       sed -i -e "s/TEMPLATE_PATH_PLACEHOLDER/$TEMPLATE_BUCKET\/$TEMPLATE_PREFIX/" $conf
                     fi
                   done
+                - |
+                  chmod +x cloudformation/stackset/assemble-microservice-params.sh
+                  ./cloudformation/stackset/assemble-microservice-params.sh $ENVIRONMENT_STACK_NAME
                 - |
                   if [ "X$TEMPLATE_PREFIX" = "X" ]; then
                     aws s3 cp "cloudformation/stackset/microservice.yaml" "s3://$TEMPLATE_BUCKET/stackset/microservice.yaml"
