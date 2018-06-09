@@ -466,15 +466,15 @@ Resources:
                 - |
                   if [ "X$TEMPLATE_PREFIX" = "X" ]; then
                     aws s3 cp "cloudformation/stackset/microservice.yaml" "s3://$TEMPLATE_BUCKET/stackset/microservice.yaml"
-                    aws s3 cp "cloudformation/stackset/microservice-params.json" "s3://$TEMPLATE_BUCKET/stackset/microservice-params.json"
+                    aws s3 cp "microservice-params.json" "s3://$TEMPLATE_BUCKET/stackset/microservice-params.json"
                   else
                     aws s3 cp "cloudformation/stackset/microservice.yaml" "s3://$TEMPLATE_BUCKET/$TEMPLATE_PREFIX/stackset/microservice.yaml"
-                    aws s3 cp "cloudformation/stackset/microservice-params.json" "s3://$TEMPLATE_BUCKET/$TEMPLATE_PREFIX/stackset/microservice-params.json"
+                    aws s3 cp "microservice-params.json" "s3://$TEMPLATE_BUCKET/$TEMPLATE_PREFIX/stackset/microservice-params.json"
                   fi
           artifacts:
             files:
               - cloudformation/stackset/microservice.yaml
-              - cloudformation/stackset/microservice-params.json
+              - microservice-params.json
 
       TimeoutInMinutes: 15
 
@@ -556,7 +556,7 @@ Resources:
                 StackName:
                   Fn::Sub: Prod-${AWS::StackName}
                 TemplateConfiguration: CFNTemplateArtifact::cloudformation/stackset/microservice-params.json
-                TemplatePath: CFNTemplateArtifact::cloudformation/stackset/microservice.yaml
+                TemplatePath: CFNTemplateArtifact::microservice.yaml
               RunOrder: 1
             -
               Name: DeployProduction
