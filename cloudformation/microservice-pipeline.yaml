@@ -454,11 +454,11 @@ Resources:
                     sed -i -e "s/GITHUB_BRANCH_PLACEHOLDER/$GITHUB_BRANCH/" $conf
                     sed -i -e "s/GITHUB_TOKEN_PLACEHOLDER/$GITHUB_TOKEN/" $conf
                     if [ "X$TEMPLATE_PREFIX" = "X" ]; then
-                      echo "Replacing \"TEMPLATE_PATH_PLACEHOLDER\" for \"$TEMPLATE_BUCKET\" in $conf"
-                      sed -i -e "s/TEMPLATE_PATH_PLACEHOLDER/$TEMPLATE_BUCKET/" $conf
+                      echo "Replacing \"TEMPLATE_PLACEHOLDER\" for \"$TEMPLATE_BUCKET\" in $conf"
+                      sed -i -e "s/TEMPLATE_PLACEHOLDER/$TEMPLATE_BUCKET/" $conf
                     else
-                      echo "Replacing \"TEMPLATE_PATH_PLACEHOLDER\" for \"$TEMPLATE_BUCKET/$TEMPLATE_PREFIX\" in $conf"
-                      sed -i -e "s/TEMPLATE_PATH_PLACEHOLDER/$TEMPLATE_BUCKET\/$TEMPLATE_PREFIX/" $conf
+                      echo "Replacing \"TEMPLATE_PLACEHOLDER\" for \"$TEMPLATE_BUCKET/$TEMPLATE_PREFIX\" in $conf"
+                      sed -i -e "s/TEMPLATE_PLACEHOLDER/$TEMPLATE_BUCKET\/$TEMPLATE_PREFIX/" $conf
                     fi
                   done
                 - |

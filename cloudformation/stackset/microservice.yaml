@@ -134,7 +134,7 @@ Resources:
   Cluster:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/microservice-templates/ecs-cluster.yaml"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/cloudformation/stackset/microservice-templates/ecs-cluster.yaml"
       Parameters:
         SourceSecurityGroup: !Ref LoadBalancerSourceSecurityGroup
         Subnets: !Ref Subnets
@@ -143,7 +143,7 @@ Resources:
   DeploymentPipeline:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/microservice-templates/deployment-pipeline.yaml"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/cloudformation/stackset/microservice-templates/deployment-pipeline.yaml"
       Parameters:
         Cluster: !GetAtt Cluster.Outputs.ClusterName
         Service: !GetAtt Service.Outputs.Service
@@ -159,7 +159,7 @@ Resources:
   LoadBalancerListener:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/microservice-templates/load-balancer-listener.yaml"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/cloudformation/stackset/microservice-templates/load-balancer-listener.yaml"
       Parameters:
         VpcId: !Ref VpcId
         LoadBalancerArn: !Ref LoadBalancerArn
@@ -167,7 +167,7 @@ Resources:
   Service:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/microservice-templates/service.yaml"
+      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/cloudformation/stackset/microservice-templates/service.yaml"
       Parameters:
         Cluster: !GetAtt Cluster.Outputs.ClusterName
         TargetGroup: !GetAtt LoadBalancerListener.Outputs.TargetGroup
