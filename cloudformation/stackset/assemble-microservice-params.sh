@@ -7,6 +7,6 @@ fi
 
 aws cloudformation describe-stacks --region eu-west-1 --stack-name $1 > temp_environment_stack_desc.json
 
-python assemble_microservice_params.py microservice-params-template.json temp_environment_stack_desc.json
+python cloudformation/stackset/assemble_microservice_params.py microservice-params-template.json temp_environment_stack_desc.json
 
 rm temp_environment_stack_desc.json

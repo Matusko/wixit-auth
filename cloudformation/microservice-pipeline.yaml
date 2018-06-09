@@ -321,6 +321,7 @@ Resources:
                   - "cloudformation:List*"
                 Resource:
                   - Fn::Sub: arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/Test-${AWS::StackName}*
+                  - Fn::Sub: arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${EnvironmentStackName}
               -
                 Effect: "Allow"
                 Action:
