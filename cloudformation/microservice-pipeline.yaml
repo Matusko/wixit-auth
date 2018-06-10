@@ -1,4 +1,4 @@
-Description: Create a CodePipeline to include Nested CloudFormation, CodeBuild and Approval steps.
+Description: Create a CodePipeline for wixit-auth stack set to include Nested CloudFormation, CodeBuild and Approval steps.
 
 Parameters:
   ArtifactStoreS3Location:
