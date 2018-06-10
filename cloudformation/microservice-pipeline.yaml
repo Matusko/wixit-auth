@@ -1,4 +1,4 @@
-Description: Create a CodePipeline for wixit-auth stack set with nested stacks.
+Description: Create a CodePipeline for wixit-auth stack set with nested stacks
 
 Parameters:
   ArtifactStoreS3Location:
