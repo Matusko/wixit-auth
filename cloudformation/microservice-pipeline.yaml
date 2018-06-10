@@ -1,9 +1,9 @@
-Description: Create a CodePipeline for wixit-auth stack set with nested stacks.
+Description: Create a CodePipeline for wixit-auth stack set with nested stacks
 
 Parameters:
   ArtifactStoreS3Location:
     Type: String
-    Description: Name of the S3 bucket to store CodePipeline artificat.
+    Description: Name of the S3 bucket to store CodePipeline artificat
   GitHubRepo:
     Type: String
   GitHubBranch:
