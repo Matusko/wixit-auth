@@ -211,6 +211,9 @@ Resources:
                   - "codepipeline:GetPipeline"
                   - "codepipeline:DeletePipeline"
                   - "codepipeline:GetPipelineState"
+                  - "acm:RequestCertificate"
+                  - "acm:DeleteCertificate"
+                  - "acm:DescribeCertificate"
                 Resource:
                   - "*"
               -
