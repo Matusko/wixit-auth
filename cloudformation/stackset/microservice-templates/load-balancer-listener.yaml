@@ -14,12 +14,23 @@ Resources:
   LoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
+      Certificates:
+        - CertificateArn: !Ref Certificate
       LoadBalancerArn: !Ref LoadBalancerArn
-      Port: 80
-      Protocol: HTTP
+      Port: 443
+      Protocol: HTTPS
+      SslPolicy: StringELBSecurityPolicy-TLS-1-2-2017-01
       DefaultActions:
         - Type: forward
           TargetGroupArn: !Ref TargetGroup
+
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: wixit.xyz
+      DomainValidationOptions:
+      - DomainName: wixit.xyz
+        ValidationDomain: wixit.xyz
 
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
