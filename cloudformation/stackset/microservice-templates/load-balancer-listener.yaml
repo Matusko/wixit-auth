@@ -15,7 +15,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       Certificates:
-        - CertificateArn: !Ref Certificate
+        - CertificateArn: arn:aws:acm:eu-west-1:588476158895:certificate/713f1d6c-7d1d-46b9-8905-2ffee3193440
       LoadBalancerArn: !Ref LoadBalancerArn
       Port: 443
       Protocol: HTTPS
@@ -24,13 +24,6 @@ Resources:
         - Type: forward
           TargetGroupArn: !Ref TargetGroup
 
-  Certificate:
-    Type: AWS::CertificateManager::Certificate
-    Properties:
-      DomainName: wixit.xyz
-      DomainValidationOptions:
-      - DomainName: wixit.xyz
-        ValidationDomain: wixit.xyz
 
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
