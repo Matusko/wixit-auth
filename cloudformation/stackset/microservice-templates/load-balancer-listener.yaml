@@ -51,7 +51,7 @@ Resources:
       Conditions:
         - Field: path-pattern
           Values:
-            - /
+            - /user
       Actions:
         - TargetGroupArn: !Ref TargetGroup
           Type: forward

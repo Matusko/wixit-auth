@@ -166,6 +166,7 @@ Resources:
                   - "elasticloadbalancing:DeleteTargetGroup"
                   - "elasticloadbalancing:ModifyTargetGroupAttributes"
                   - "elasticloadbalancing:CreateListener"
+                  - "elasticloadbalancing:ModifyListener"
                   - "elasticloadbalancing:DeleteListener"
                   - "elasticloadbalancing:CreateRule"
                   - "elasticloadbalancing:DeleteRule"
