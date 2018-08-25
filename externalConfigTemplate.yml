@@ -11,3 +11,6 @@ spring:
 server:
   servlet:
     contextPath: {{% CONTEXT_PATH %}}
+logging:
+  level:
+    ROOT: DEBUG
