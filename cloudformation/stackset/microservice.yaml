@@ -71,6 +71,15 @@ Parameters:
     Description: >
       The S3 bucket from which to fetch the templates used by this stack.
 
+  ContextPath:
+    Type: String
+    Default: /auth
+    Description: url path prefix for all microservice calls
+
+  LoadBalancerListenerCertificateArn:
+    Type: String
+    Description: SSl certificate arn for load balancer listene
+
 
 Metadata:
   AWS::CloudFormation::Interface:
@@ -99,6 +108,10 @@ Metadata:
         default: "Branch"
       GitHubToken:
         default: "Personal Access Token"
+      ContextPath:
+        default: "Context path"
+      LoadBalancerListenerCertificateArn:
+        default: "SSl certificate arn for load balancer listener"
     ParameterGroups:
       - Label:
           default: Vpc params
@@ -128,6 +141,14 @@ Metadata:
           default: Stack Configuration
         Parameters:
           - TemplateBucket
+      - Label:
+          default: Spring boot app Configuration
+        Parameters:
+          - ContextPath
+      - Label:
+          default: SSl certificate arn for load balancer listener
+        Parameters:
+          - LoadBalancerListenerCertificateArn
 
 
 Resources:
@@ -155,6 +176,7 @@ Resources:
         DatabasePort: !Ref DatabasePort
         DBMasterUserName: !Ref DBMasterUserName
         DBMasterPassword: !Ref DBMasterPassword
+        ContextPath: !Ref ContextPath
 
   LoadBalancerListener:
     Type: AWS::CloudFormation::Stack
@@ -163,6 +185,8 @@ Resources:
       Parameters:
         VpcId: !Ref VpcId
         LoadBalancerArn: !Ref LoadBalancerArn
+        LoadBalancerListenerCertificateArn: !Ref LoadBalancerListenerCertificateArn
+        ContextPath: !Ref ContextPath
 
   Service:
     Type: AWS::CloudFormation::Stack

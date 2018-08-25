@@ -34,6 +34,9 @@ Parameters:
   Service:
     Type: String
 
+  ContextPath:
+    Type: String
+
 
 Resources:
   Repository:
@@ -137,7 +140,7 @@ Resources:
                 - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
                 - IMAGE_URI="${REPOSITORY_URI}:${TAG}"
                 - echo generating config
-                - sed -e "s/{{% DB_ENDPOINT %}}/${DB_ENDPOINT}/" -e "s/{{% DB_PORT %}}/${DB_PORT}/" -e "s/{{% DB_MASTER_NAME %}}/${DB_MASTER_NAME}/" -e "s/{{% DB_MASTER_PSWD %}}/${DB_MASTER_PSWD}/" externalConfigTemplate.yml > externalConfig.yml
+                - sed -e "s/{{% DB_ENDPOINT %}}/${DB_ENDPOINT}/" -e "s/{{% DB_PORT %}}/${DB_PORT}/" -e "s/{{% DB_MASTER_NAME %}}/${DB_MASTER_NAME}/" -e "s/{{% DB_MASTER_PSWD %}}/${DB_MASTER_PSWD}/" -e "s/{{% CONTEXT_PATH %}}/${CONTEXT_PATH}/" externalConfigTemplate.yml > externalConfig.yml
             build:
               commands:
                 - echo mvn install
@@ -168,6 +171,8 @@ Resources:
             Value: !Ref DBMasterUserName
           - Name: DB_MASTER_PSWD
             Value: !Ref DBMasterPassword
+          - Name: CONTEXT_PATH
+            Value: !Ref ContextPath
       Name: !Ref AWS::StackName
       ServiceRole: !Ref CodeBuildServiceRole
 

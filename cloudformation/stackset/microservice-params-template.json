@@ -6,6 +6,8 @@
     "GitHubRepo": "GITHUB_REPO_PLACEHOLDER",
     "GitHubBranch": "GITHUB_BRANCH_PLACEHOLDER",
     "GitHubToken": "GITHUB_TOKEN_PLACEHOLDER",
-    "TemplateBucket": "TEMPLATE_PLACEHOLDER"
+    "TemplateBucket": "TEMPLATE_PLACEHOLDER",
+    "ContextPath": "CONTEXT_PATH_PLACEHOLDER",
+    "LoadBalancerListenerCertificateArn": "LOAD_BALANCER_LISTENER_CERTIFICATE_ARN_PLACEHOLDER"
   }
 }

@@ -9,13 +9,19 @@ Parameters:
   LoadBalancerArn:
     Type: String
 
+  LoadBalancerListenerCertificateArn:
+    Type: String
+
+  ContextPath:
+    Type: String
+
 
 Resources:
   LoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       Certificates:
-        - CertificateArn: arn:aws:acm:eu-west-1:588476158895:certificate/713f1d6c-7d1d-46b9-8905-2ffee3193440
+        - CertificateArn: !Ref LoadBalancerListenerCertificateArn
       LoadBalancerArn: !Ref LoadBalancerArn
       Port: 443
       Protocol: HTTPS
@@ -51,7 +57,7 @@ Resources:
       Conditions:
         - Field: path-pattern
           Values:
-            - /test
+            - !Ref ContextPath
       Actions:
         - TargetGroupArn: !Ref TargetGroup
           Type: forward

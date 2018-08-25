@@ -20,6 +20,10 @@ Parameters:
     NoEcho: true
   EnvironmentStackName:
     Type: String
+  ContextPath:
+    Type: String
+  LoadBalancerListenerCertificateArn:
+    Type: String
 
 Resources:
   CodePipelineRole:
@@ -169,6 +173,7 @@ Resources:
                   - "elasticloadbalancing:ModifyListener"
                   - "elasticloadbalancing:DeleteListener"
                   - "elasticloadbalancing:CreateRule"
+                  - "elasticloadbalancing:ModifyRule"
                   - "elasticloadbalancing:DeleteRule"
                   - "autoscaling:CreateAutoScalingGroup"
                   - "autoscaling:DeleteAutoScalingGroup"
@@ -444,6 +449,12 @@ Resources:
           - Name: GITHUB_TOKEN
             Value:
               Ref: GitHubToken
+          - Name: CONTEXT_PATH
+            Value:
+              Ref: ContextPath
+          - Name: LOAD_BALANCER_LISTENER_CERTIFICATE_ARN
+            Value:
+              Ref: LoadBalancerListenerCertificateArn
       Source:
         Type: CODEPIPELINE
         BuildSpec: |
@@ -502,6 +513,8 @@ Resources:
                     sed -i -e "s/GITHUB_REPO_PLACEHOLDER/$GITHUB_REPO/" $conf
                     sed -i -e "s/GITHUB_BRANCH_PLACEHOLDER/$GITHUB_BRANCH/" $conf
                     sed -i -e "s/GITHUB_TOKEN_PLACEHOLDER/$GITHUB_TOKEN/" $conf
+                    sed -i -e "s/CONTEXT_PATH_PLACEHOLDER/$CONTEXT_PATH/" $conf
+                    sed -i -e "s/LOAD_BALANCER_LISTENER_CERTIFICATE_ARN_PLACEHOLDER/$LOAD_BALANCER_LISTENER_CERTIFICATE_ARN/" $conf
                     if [ "X$TEMPLATE_PREFIX" = "X" ]; then
                       echo "Replacing \"TEMPLATE_PLACEHOLDER\" for \"$TEMPLATE_BUCKET\" in $conf"
                       sed -i -e "s/TEMPLATE_PLACEHOLDER/$TEMPLATE_BUCKET/" $conf
