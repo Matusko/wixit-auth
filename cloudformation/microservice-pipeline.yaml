@@ -507,6 +507,8 @@ Resources:
                 - |
                   for conf in $CONFIG_FILES; do
                     echo "Replacing placeholders in $conf"
+                    echo "Replacing LOAD_BALANCER_LISTENER_CERTIFICATE_ARN_PLACEHOLDER with $LOAD_BALANCER_LISTENER_CERTIFICATE_ARN"
+                    echo "Replacing CONTEXT_PATH_PLACEHOLDER with $CONTEXT_PATH"
                     sed -i -e "s/DB_MASTER_USER_NAME_PLACEHOLDER/$DB_MASTER_USER_NAME/" $conf
                     sed -i -e "s/DB_MASTER_PASSWORD_PLACEHOLDER/$DB_MASTER_PASSWORD/" $conf
                     sed -i -e "s/GITHUB_USER_PLACEHOLDER/$GITHUB_USER/" $conf
