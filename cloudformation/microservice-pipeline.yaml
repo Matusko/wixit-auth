@@ -167,6 +167,7 @@ Resources:
                   - "elasticloadbalancing:CreateLoadBalancer"
                   - "elasticloadbalancing:DeleteLoadBalancer"
                   - "elasticloadbalancing:CreateTargetGroup"
+                  - "elasticloadbalancing:ModifyTargetGroup"
                   - "elasticloadbalancing:DeleteTargetGroup"
                   - "elasticloadbalancing:ModifyTargetGroupAttributes"
                   - "elasticloadbalancing:CreateListener"

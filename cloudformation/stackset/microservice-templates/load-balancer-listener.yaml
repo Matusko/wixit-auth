@@ -27,8 +27,10 @@ Resources:
       Protocol: HTTPS
       SslPolicy: ELBSecurityPolicy-TLS-1-2-2017-01
       DefaultActions:
-        - Type: forward
-          TargetGroupArn: !Ref TargetGroup
+        - Type: fixed-response
+          FixedResponseConfig:
+            StatusCode: 501
+            ContentType: application/json
 
 
   TargetGroup:
@@ -40,7 +42,7 @@ Resources:
       Matcher:
         HttpCode: 200-299
       HealthCheckIntervalSeconds: 10
-      HealthCheckPath: !Ref ContextPath
+      HealthCheckPath: !Sub "${ContextPath}/healthcheck/"
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
@@ -57,7 +59,7 @@ Resources:
       Conditions:
         - Field: path-pattern
           Values:
-            - !Ref ContextPath
+            - !Sub "${ContextPath}/*"
       Actions:
         - TargetGroupArn: !Ref TargetGroup
           Type: forward
