@@ -10,4 +10,4 @@ spring:
     password: {{% DB_MASTER_PSWD %}}
 server:
   servlet:
-    contextPath: /test
+    contextPath: {{% CONTEXT_PATH %}}
