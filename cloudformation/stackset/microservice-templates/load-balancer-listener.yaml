@@ -27,10 +27,8 @@ Resources:
       Protocol: HTTPS
       SslPolicy: ELBSecurityPolicy-TLS-1-2-2017-01
       DefaultActions:
-        - Type: fixed-response
-          FixedResponseConfig:
-            StatusCode: 501
-            ContentType: application/json
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
 
 
   TargetGroup:
