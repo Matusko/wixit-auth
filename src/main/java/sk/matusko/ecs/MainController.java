@@ -8,7 +8,7 @@ public class MainController {
 
     @RequestMapping(value = "/")
     public String home() {
-        return "Hello Docker World, i have added webhooks";
+        return "Hello Docker World, i have added webhooks in seprate repo";
     }
 
     @RequestMapping(value = "/healthcheck")
