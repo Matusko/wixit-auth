@@ -42,7 +42,7 @@
                     <repository>${docker.image.prefix}/${project.artifactId}</repository>
 					<buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-                        <CONFIG_FILE>externalConfig.yml</CONFIG_FILE>
+                        <CONFIG_FILE>externalConfigTemplate.yml</CONFIG_FILE>
 					</buildArgs>
                 </configuration>
             </plugin>

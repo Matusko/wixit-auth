@@ -1,3 +1,4 @@
 .idea/
 target/
 cloudformation/deployment-pipeline-params.json
+run.sh
