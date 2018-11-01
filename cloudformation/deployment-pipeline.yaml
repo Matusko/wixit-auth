@@ -5,22 +5,23 @@ AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   GitHubRepo:
     Type: String
-
   GitHubBranch:
     Type: String
-
   GitHubToken:
     Type: String
     NoEcho: true
-
   GitHubUser:
     Type: String
-
   MicroserviceArtifactStoreS3Location:
     Type: String
-
   AuthInfrastructureStackName:
     Type: String
+  StageLevel:
+    Type: String
+    Default: dev
+    AllowedValues:
+    - dev
+    - prod
 
 
 Resources:
