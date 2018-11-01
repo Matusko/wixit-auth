@@ -18,8 +18,9 @@ Parameters:
     Type: String
   StageLevel:
     Type: String
-    Default: dev
+    Default: test
     AllowedValues:
+    - test
     - dev
     - prod
 
