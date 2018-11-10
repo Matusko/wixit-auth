@@ -1,0 +1,30 @@
+[
+  {
+    "ParameterKey": "GitHubRepo",
+    "ParameterValue": "wixit-auth"
+  },
+  {
+    "ParameterKey": "GitHubBranch",
+    "ParameterValue": "GIT_HUB_BRANCH"
+  },
+  {
+    "ParameterKey": "GitHubUser",
+    "ParameterValue": "Matusko"
+  },
+  {
+    "ParameterKey": "GitHubToken",
+    "ParameterValue": "GIT_HUB_TOKEN"
+  },
+  {
+    "ParameterKey": "MicroserviceArtifactStoreS3Location",
+    "ParameterValue": "ARTIFACT_STORE"
+  },
+  {
+    "ParameterKey": "AuthInfrastructureStackName",
+    "ParameterValue": "INFRASTRUCTURE"
+  },
+  {
+    "ParameterKey": "StageLevel",
+    "ParameterValue": "STAGE_LEVEL"
+  }
+]
