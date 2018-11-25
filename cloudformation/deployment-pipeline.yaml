@@ -97,12 +97,12 @@ Resources:
               - Resource: "*"
                 Effect: Allow
                 Action:
-                  - ecs:DescribeServices
-                  - ecs:DescribeTaskDefinition
-                  - ecs:DescribeTasks
-                  - ecs:ListTasks
-                  - ecs:RegisterTaskDefinition
-                  - ecs:UpdateService
+                  - wixit:DescribeServices
+                  - wixit:DescribeTaskDefinition
+                  - wixit:DescribeTasks
+                  - wixit:ListTasks
+                  - wixit:RegisterTaskDefinition
+                  - wixit:UpdateService
                   - codebuild:StartBuild
                   - codebuild:BatchGetBuilds
                   - iam:PassRole
