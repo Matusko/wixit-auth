@@ -4,7 +4,7 @@ mvn spring-boot:run
 
 **Build docker image**
 
-docker build --build-arg JAR_FILE=target/gs-spring-boot-docker-0.1.0.jar --tag ${some_tag} .
+docker build --build-arg JAR_FILE=target/wixit-auth-0.1.0-SNAPSHOT.jar --tag ${some_tag} .
 
 **OR**
 

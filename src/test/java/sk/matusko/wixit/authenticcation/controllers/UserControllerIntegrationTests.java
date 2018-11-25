@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package hello;
-
-import static org.junit.Assert.assertEquals;
+package sk.matusko.wixit.authenticcation.controllers;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,16 +22,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import sk.matusko.wixit.Application;
+import sk.matusko.wixit.authentication.dao.User;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = Application.class)
 @DirtiesContext
-public class HelloWorldConfigurationTests {
+public class UserControllerIntegrationTests {
 
     @LocalServerPort
     private int port;
@@ -43,8 +45,9 @@ public class HelloWorldConfigurationTests {
 
     @Test
     public void testGreeting() throws Exception {
-        ResponseEntity<String> entity = restTemplate
-                .getForEntity("http://localhost:" + this.port + "/", String.class);
+
+        HttpEntity<User> request = new HttpEntity<>(new User("foo", "bar"));
+        ResponseEntity entity = restTemplate.postForEntity("http://localhost:" + this.port + "/user", request, User.class);
         assertEquals(HttpStatus.OK, entity.getStatusCode());
     }
 

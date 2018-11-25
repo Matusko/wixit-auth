@@ -10,7 +10,7 @@ phases:
     - echo mvn install
     - mvn install dockerfile:build
     - echo docker build
-    - docker build --build-arg JAR_FILE=target/gs-spring-boot-docker-0.1.0.jar --build-arg CONFIG_FILE=externalConfigTemplate.yml --tag "$IMAGE_URI" .
+    - docker build --build-arg JAR_FILE=target/wixit-auth-0.1.0-SNAPSHOT.jar --build-arg CONFIG_FILE=externalConfigTemplate.yml --tag "$IMAGE_URI" .
   post_build:
     commands:
     - docker push "$IMAGE_URI"
