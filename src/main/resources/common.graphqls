@@ -1,0 +1,30 @@
+type GTest {
+    prop: SomeTest
+}
+
+type Page {
+    number: Int
+    size: Int
+    numberOfElements: Int
+    content: [User]
+    hasContent: Boolean
+    isFirst: Boolean
+    isLast: Boolean
+    hasNext: Boolean
+    hasPrevious: Boolean
+    totalPages: Int
+    totalElements: Float
+}
+
+type User {
+    id: Int
+    firstName: String
+    lastName: String
+}
+
+input UserInput {
+    firstName: String
+    lastName: String
+}
+
+union PageListItem = User
