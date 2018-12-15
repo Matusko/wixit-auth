@@ -12,7 +12,7 @@ import org.springframework.data.querydsl.QPageRequest
 
 @Component
 class UserResolver @Autowired
-constructor(private val userService: UserService): GraphQLMutationResolver, GraphQLQueryResolver {
+constructor(private val userService: UserService) : GraphQLMutationResolver, GraphQLQueryResolver {
 
     fun createUser(user: User): User {
         userService.save(user)
