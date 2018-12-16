@@ -1,7 +1,8 @@
 **Dependencies**
 - postgres
+- redis
 
-before running locally make sure postgres docker container is running
+before running locally make sure postgres and redis docker container is running
 
 **Run spring boot**
 

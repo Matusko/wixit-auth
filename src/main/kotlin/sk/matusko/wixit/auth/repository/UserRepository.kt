@@ -9,4 +9,6 @@ interface UserRepository : PagingAndSortingRepository<User, Long> {
 
     fun findByLastName(lastName: String, pageable: Pageable): Page<User>
 
+    fun findOneByUsername(username: String): User
+
 }
