@@ -53,6 +53,10 @@ class User : Serializable, Owner, UserDetails {
         this.lastName = lastName
     }
 
+    public fun setPassword(password: String) {
+        this.password = password;
+    }
+
     @JsonIgnore
     override fun owner(): User {
         return this

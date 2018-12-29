@@ -9,7 +9,8 @@ before running locally make sure postgres and redis docker container is running
     mvn spring-boot:run
 
 **Build docker image**
-
+      
+    mvn package
     docker build --build-arg JAR_FILE=target/wixit-auth-0.1.0-SNAPSHOT.jar --tag ${some_tag} .
 
 **OR**
@@ -22,7 +23,8 @@ before running locally make sure postgres and redis docker container is running
 
 **run docker container**
 
-    docker run -p 8080:8080 -t ${some_tag}
+    docker run  --network host -e DB_ENDPOINT= -e DB_PORT= -e DB_MASTER_NAME= -e DB_MASTER_PSWD= -e CONTEXT_PATH= -e REDIS_ENDPOINT= -e REDIS_PORT= -e REDIS_PSWD= -t springio/wixit-auth
+
 
 **check running containers**
 

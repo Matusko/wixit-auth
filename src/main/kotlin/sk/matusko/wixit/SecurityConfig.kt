@@ -17,6 +17,7 @@ class SecurityConfig : ResourceServerConfigurerAdapter() {
                 .authorizeRequests()
                 .antMatchers("/healthcheck").permitAll()
                 .antMatchers("/oauth/**").permitAll()
+                .antMatchers("/users").permitAll()
                 .anyRequest().authenticated()
     }
 }
