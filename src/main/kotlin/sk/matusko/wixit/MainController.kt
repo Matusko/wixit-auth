@@ -8,7 +8,7 @@ class MainController {
 
     @RequestMapping(value = ["/"])
     fun home(): String {
-        return "Hello Docker World, hot reload test changed"
+        return "Hello Docker World, docker test with redis"
     }
 
     @RequestMapping(value = ["/healthcheck"])
