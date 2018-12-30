@@ -2,12 +2,13 @@ package sk.matusko.wixit.auth.service
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.validation.annotation.Validated
 import sk.matusko.wixit.common.dao.User
 import javax.validation.Valid
 
 @Validated
-interface UserService {
+interface UserService : UserDetailsService {
 
     fun save(@Valid user: User): User
 

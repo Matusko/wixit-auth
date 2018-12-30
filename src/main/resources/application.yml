@@ -14,3 +14,7 @@ endpoints:
     enabled: true
   shutdown:
     enabled: true
+
+logging:
+  level:
+    ROOT: INFO
