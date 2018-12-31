@@ -1,5 +1,6 @@
 package sk.matusko.wixit
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import springfox.documentation.builders.PathSelectors
@@ -25,6 +26,8 @@ import java.util.Collections
 @Configuration
 @EnableSwagger2
 class SwaggerConfig {
+    @Value("\${custom.swagger.oauthPath}")
+    private val contextPath: String? = null
 
     @Bean
     fun api(): Docket {
@@ -54,7 +57,7 @@ class SwaggerConfig {
         authorizationScopeList.add(AuthorizationScope("write", "access all"))
 
         val grantTypes = ArrayList<GrantType>()
-        val creGrant = ResourceOwnerPasswordCredentialsGrant("/test/oauth/token")
+        val creGrant = ResourceOwnerPasswordCredentialsGrant(this.contextPath + "/oauth/token")
 
         grantTypes.add(creGrant)
 
