@@ -15,8 +15,9 @@ class SecurityConfig : ResourceServerConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .authorizeRequests()
-                .antMatchers("/healthcheck").permitAll()
+                .antMatchers("/healthcheck", "/healthcheck/").permitAll()
                 .antMatchers("/oauth/**").permitAll()
+                .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/users").permitAll()
                 .anyRequest().authenticated()
     }

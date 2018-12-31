@@ -4,3 +4,4 @@ cloudformation/deployment-pipeline-params.json
 cloudformation/deployment-pipeline-params-without-variables.json
 run.sh
 externalConfig.yml
+ssh/
