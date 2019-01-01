@@ -8,8 +8,6 @@ sed -i \
     -e "s/{{% DB_MASTER_PSWD %}}/${DB_MASTER_PSWD}/" \
     -e "s/{{% REDIS_ENDPOINT %}}/${REDIS_ENDPOINT}/" \
     -e "s/{{% REDIS_PORT %}}/${REDIS_PORT}/" \
-    -e "s/{{% REDIS_PSWD %}}/${REDIS_PSWD}/" \
-    -e "s/{{% REDIS_SSL_ENABLED %}}/$REDIS_SSL_ENABLED/" \
     -e "s/{{% CONTEXT_PATH %}}/$CONTEXT_PATH_ESCAPED/" \
     conf.yml
 
