@@ -23,7 +23,7 @@ before running locally make sure postgres and redis docker container is running
 
 **run docker container**
 
-    docker run  --network host -e DB_ENDPOINT= -e DB_PORT= -e DB_MASTER_NAME= -e DB_MASTER_PSWD= -e CONTEXT_PATH= -e REDIS_ENDPOINT= -e REDIS_PORT= -e REDIS_PSWD= -e REDIS_SSL_ENABLED= -t springio/wixit-auth
+    docker run  --network host -e DB_ENDPOINT= -e DB_PORT= -e DB_MASTER_NAME= -e DB_MASTER_PSWD= -e CONTEXT_PATH= -e REDIS_ENDPOINT= -e REDIS_PORT= -t springio/wixit-auth
 
 
 **check running containers**

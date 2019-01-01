@@ -11,8 +11,6 @@ spring:
   redis:
     host: {{% REDIS_ENDPOINT %}}
     port: {{% REDIS_PORT %}}
-    password: {{% REDIS_PSWD %}}
-    ssl: {{% REDIS_SSL_ENABLED %}}
 server:
   servlet:
     contextPath: {{% CONTEXT_PATH %}}

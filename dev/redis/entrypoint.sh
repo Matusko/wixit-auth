@@ -1,5 +1,5 @@
 #!/bin/bash
 
-usr/bin/redis-server --requirepass ${PASSWORD}
-ENTRYPOINT  ["/usr/bin/redis-server", "--requirepass", "$PASSWORD"]
+usr/bin/redis-server
+ENTRYPOINT  ["/usr/bin/redis-server"]
 exec "$@"
