@@ -24,3 +24,5 @@ management:
 logging:
   level:
     ROOT: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p %C:%L - %msg%n"
