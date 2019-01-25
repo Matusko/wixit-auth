@@ -182,10 +182,10 @@ Resources:
               Configuration:
                 ClusterName:
                   Fn::ImportValue:
-                    !Sub "${AuthInfrastructureStackName}-PROD-Cluster"
+                    !Sub "${AuthInfrastructureStackName}-DEV-Cluster"
                 ServiceName:
                   Fn::ImportValue:
-                    !Sub "${AuthInfrastructureStackName}-PROD-Service"
+                    !Sub "${AuthInfrastructureStackName}-DEV-Service"
                 FileName: images.json
               InputArtifacts:
                 - Name: BuildOutput
