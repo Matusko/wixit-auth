@@ -1,10 +1,10 @@
 [
   {
-    "ParameterKey": "GitHubRepo",
+    "ParameterKey": "GitHubInfrastructureRepo",
     "ParameterValue": "wixit-auth"
   },
   {
-    "ParameterKey": "GitHubBranch",
+    "ParameterKey": "GitHubInfrastructureBranch",
     "ParameterValue": "GIT_HUB_BRANCH"
   },
   {
@@ -16,12 +16,16 @@
     "ParameterValue": "GIT_HUB_TOKEN"
   },
   {
-    "ParameterKey": "MicroserviceArtifactStoreS3Location",
+    "ParameterKey": "ArtifactStoreS3Location",
     "ParameterValue": "ARTIFACT_STORE"
   },
   {
-    "ParameterKey": "AuthInfrastructureStackName",
-    "ParameterValue": "INFRASTRUCTURE"
+    "ParameterKey": "Email",
+    "ParameterValue": "bartko.mat@gmail.com"
+  },
+  {
+    "ParameterKey": "ContextPath",
+    "ParameterValue": "CONTEXT_PATH"
   },
   {
     "ParameterKey": "StageLevel",
