@@ -471,7 +471,7 @@ Resources:
                   - ecr:InitiateLayerUpload
                   - ecr:UploadLayerPart
                   - ecr:CompleteLayerUpload
-                  -
+
   BuildCopyCFNProject:
     Type: AWS::CodeBuild::Project
     Properties:
