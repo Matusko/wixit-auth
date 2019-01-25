@@ -617,10 +617,10 @@ Resources:
                 Configuration:
                   ClusterName:
                     Fn::ImportValue:
-                      !Sub "${AuthInfrastructureStackName}-DEV-Cluster"
+                      !Sub "${AWS::StackName}-DEV-Cluster"
                   ServiceName:
                     Fn::ImportValue:
-                      !Sub "${AuthInfrastructureStackName}-DEV-Service"
+                      !Sub "${AWS::StackName}-DEV-Service"
                   FileName: images.json
                 InputArtifacts:
                   - Name: BuildOutput
