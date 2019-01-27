@@ -44,7 +44,7 @@ class MainControllerTest {
     fun testGreeting() {
         val entity = restTemplate!!
                 .getForEntity("http://localhost:" + this.port + "/", String::class.java)
-        assertEquals(HttpStatus.UNAUTHORIZED, entity.statusCode)
+        assertEquals(HttpStatus.OK, entity.statusCode)
     }
 
 }

@@ -1,0 +1,125 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+
+
+Parameters:
+  Cluster:
+    Type: String
+
+  DesiredCount:
+    Type: Number
+    Default: 1
+
+  TargetGroup:
+    Type: String
+
+  SourceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup::Id
+
+  Subnets:
+    Type: List<AWS::EC2::Subnet::Id>
+
+  DatabaseEndpoint:
+    Type: String
+
+  DatabasePort:
+    Type: String
+
+  DBMasterUserName:
+    Type: String
+
+  DBMasterPassword:
+    Type: String
+    NoEcho: true
+
+  RedisEndpoint:
+    Type: String
+
+  RedisPort:
+    Type: String
+
+  ContextPath:
+    Type: String
+
+  ServiceName:
+    Type: String
+
+Resources:
+  TaskExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /ecs/${AWS::StackName}
+
+  EC2Service:
+    Type: AWS::ECS::Service
+    Properties:
+      ServiceName: !Ref ServiceName
+      Cluster: !Ref Cluster
+      DesiredCount: !Ref DesiredCount
+      TaskDefinition: !Ref TaskDefinition
+      LaunchType: EC2
+      LoadBalancers:
+        - ContainerName: simple-app
+          ContainerPort: 8080
+          TargetGroupArn: !Ref TargetGroup
+
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: !Sub ${AWS::StackName}-simple-app
+      RequiresCompatibilities:
+        - EC2
+      Memory: 512
+      Cpu: 256
+      NetworkMode: bridge
+      ExecutionRoleArn: !Ref TaskExecutionRole
+      ContainerDefinitions:
+        - Name: simple-app
+          Image: 588476158895.dkr.ecr.eu-west-1.amazonaws.com/gs-spring-boot-docker
+          Essential: true
+          Environment:
+            - Name: DB_ENDPOINT
+              Value: !Ref DatabaseEndpoint
+            - Name: DB_PORT
+              Value: !Ref DatabasePort
+            - Name: DB_MASTER_NAME
+              Value: !Ref DBMasterUserName
+            - Name: DB_MASTER_PSWD
+              Value: !Ref DBMasterPassword
+            - Name: REDIS_ENDPOINT
+              Value: !Ref RedisEndpoint
+            - Name: REDIS_PORT
+              Value: !Ref RedisPort
+            - Name: CONTEXT_PATH
+              Value: !Ref ContextPath
+          Memory: 512
+          PortMappings:
+            - HostPort: 8080
+              ContainerPort: 8080
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: !Ref AWS::Region
+              awslogs-group: !Ref LogGroup
+              awslogs-stream-prefix: !Ref AWS::StackName
+      Volumes:
+        - Name: my-vol
+
+
+Outputs:
+  Service:
+    Value: !Ref EC2Service

@@ -1,0 +1,104 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+  Environment:
+    Type: String
+    Description: Prod or Uat or Dev
+
+  EnvironmentStackSetName:
+    Type: String
+
+  TemplateBucket:
+    Type: String
+    Default: ec2-spring-boot-cloudformation-stack
+    Description: The S3 bucket from which to fetch the templates used by this stack.
+
+  ContextPath:
+    Type: String
+    Default: /auth
+    Description: url path prefix for all microservice calls
+
+  DBMasterUserName:
+    Type: String
+
+  DBMasterPassword:
+    Type: String
+    NoEcho: true
+
+  LoadBalancerListenerRulePriority:
+    Type: Number
+
+Resources:
+  Cluster:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/cloudformation/stackset/microservice-templates/ecs-cluster.yaml"
+      Parameters:
+        SourceSecurityGroup:
+          Fn::ImportValue:
+            !Sub "${EnvironmentStackSetName}-${Environment}-LoadBalancerSourceSecurityGroup"
+        Subnets:
+          Fn::ImportValue:
+            !Sub "${EnvironmentStackSetName}-${Environment}-Subnets"
+        VpcId:
+          Fn::ImportValue:
+            !Sub "${EnvironmentStackSetName}-${Environment}-VpcId"
+        ClusterName: !Sub "${AWS::StackName}-Cluster"
+
+  LoadBalancerListenerRule:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/cloudformation/stackset/microservice-templates/load-balancer-listener-rule.yaml"
+      Parameters:
+        VpcId:
+          Fn::ImportValue:
+            !Sub "${EnvironmentStackSetName}-${Environment}-VpcId"
+        LoadBalancerListenerArn:
+          Fn::ImportValue:
+            !Sub "${EnvironmentStackSetName}-${Environment}-LoadBalancerListenerArn"
+        ContextPath: !Ref ContextPath
+        LoadBalancerListenerRulePriority: !Ref LoadBalancerListenerRulePriority
+
+  Service:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "https://s3.amazonaws.com/${TemplateBucket}/cloudformation/stackset/microservice-templates/service.yaml"
+      Parameters:
+        Cluster: !GetAtt Cluster.Outputs.ClusterName
+        TargetGroup: !GetAtt LoadBalancerListenerRule.Outputs.TargetGroup
+        SourceSecurityGroup:
+          Fn::ImportValue:
+            !Sub "${EnvironmentStackSetName}-${Environment}-LoadBalancerSourceSecurityGroup"
+        Subnets:
+          Fn::ImportValue:
+            !Sub "${EnvironmentStackSetName}-${Environment}-Subnets"
+        DatabaseEndpoint:
+          Fn::ImportValue:
+            !Sub "${EnvironmentStackSetName}-${Environment}-DatabaseEndpoint"
+        DatabasePort:
+          Fn::ImportValue:
+            !Sub "${EnvironmentStackSetName}-${Environment}-DatabasePort"
+        DBMasterUserName: !Ref DBMasterUserName
+        DBMasterPassword: !Ref DBMasterPassword
+        RedisEndpoint:
+          Fn::ImportValue:
+            !Sub "${EnvironmentStackSetName}-${Environment}-RedisEndpoint"
+        RedisPort:
+          Fn::ImportValue:
+            !Sub "${EnvironmentStackSetName}-${Environment}-RedisPort"
+        ContextPath: !Ref ContextPath
+        ServiceName: !Sub "${AWS::StackName}-Service"
+
+
+Outputs:
+  Cluster:
+    Description: Cluster
+    Value: !GetAtt Cluster.Outputs.ClusterName
+    Export:
+      Name: !Sub "${AWS::StackName}-Cluster"
+  Service:
+    Description: Service
+    Value: !GetAtt Service.Outputs.Service
+    Export:
+      Name: !Sub "${AWS::StackName}-Service"

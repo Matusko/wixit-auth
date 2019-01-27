@@ -19,6 +19,7 @@ class SecurityConfig : ResourceServerConfigurerAdapter() {
                 .antMatchers("/oauth/**").permitAll()
                 .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/users").permitAll()
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
     }
 }
