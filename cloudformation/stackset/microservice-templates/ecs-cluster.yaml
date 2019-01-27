@@ -25,6 +25,9 @@ Parameters:
     Default: 'wixit-auth-dev'
     Description: Name of an existing EC2 KeyPair to enable SSH access to the ECS instances.
 
+  ClusterName:
+    Type: String
+
 
 Mappings:
   AWSRegionToAMI:
@@ -102,7 +105,7 @@ Resources:
   Cluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: !Ref AWS::StackName
+      ClusterName: !Ref ClusterName
 
   AutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup

@@ -41,6 +41,9 @@ Parameters:
   ContextPath:
     Type: String
 
+  ServiceName:
+    Type: String
+
 Resources:
   TaskExecutionRole:
     Type: AWS::IAM::Role
@@ -64,6 +67,7 @@ Resources:
   EC2Service:
     Type: AWS::ECS::Service
     Properties:
+      ServiceName: !Ref ServiceName
       Cluster: !Ref Cluster
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition

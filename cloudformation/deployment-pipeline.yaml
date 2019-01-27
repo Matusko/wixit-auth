@@ -615,12 +615,8 @@ Resources:
                   Version: 1
                   Provider: ECS
                 Configuration:
-                  ClusterName:
-                    Fn::ImportValue:
-                      !Sub "${AWS::StackName}-DEV-Cluster"
-                  ServiceName:
-                    Fn::ImportValue:
-                      !Sub "${AWS::StackName}-DEV-Service"
+                  ClusterName: !Sub "${AWS::StackName}-DEV-Cluster"
+                  ServiceName: !Sub "${AWS::StackName}-DEV-Service"
                   FileName: images.json
                 InputArtifacts:
                   - Name: BuildOutput

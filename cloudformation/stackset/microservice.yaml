@@ -44,6 +44,7 @@ Resources:
         VpcId:
           Fn::ImportValue:
             !Sub "${EnvironmentStackSetName}-${Environment}-VpcId"
+        ClusterName: !Sub "${AWS::StackName}-Cluster"
 
   LoadBalancerListenerRule:
     Type: AWS::CloudFormation::Stack
@@ -87,6 +88,7 @@ Resources:
           Fn::ImportValue:
             !Sub "${EnvironmentStackSetName}-${Environment}-RedisPort"
         ContextPath: !Ref ContextPath
+        ServiceName: !Sub "${AWS::StackName}-Service"
 
 
 Outputs:
