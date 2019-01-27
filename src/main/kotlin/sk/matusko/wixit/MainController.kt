@@ -8,7 +8,7 @@ class MainController {
 
     @RequestMapping(value = ["/"])
     fun home(): String {
-        return "Hello Docker World, test CI with CFN"
+        return "Hello Docker World, test CI with CFN changed"
     }
 
     @RequestMapping(value = ["/healthcheck"])
