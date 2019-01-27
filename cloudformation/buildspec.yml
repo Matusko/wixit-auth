@@ -33,6 +33,10 @@ phases:
       - mvn install dockerfile:build
       - echo docker build
       - echo "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+      - $(aws ecr get-login --no-include-email)
+      - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
+      - echo "TAG"
+      - IMAGE_URI="${REPOSITORY_URI}:${TAG}"
       - echo "$IMAGE_URI"
       - docker build --build-arg JAR_FILE=target/wixit-auth-0.1.0-SNAPSHOT.jar --build-arg CONFIG_FILE=externalConfigTemplate.yml --tag "$IMAGE_URI" .
       - echo "Copying child stack templates to S3 bucket"
