@@ -1,4 +1,4 @@
-version: 0.1
+version: 0.2
 environment_variables:
   plaintext:
     CHILD_TEMPLATES: |
@@ -19,8 +19,6 @@ phases:
       - $(aws ecr get-login --no-include-email)
       - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
       - IMAGE_URI="${REPOSITORY_URI}:${TAG}"
-      - echo "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-      - echo "$IMAGE_URI"
       - echo "Validating CFN templates"
       - |
         for cfn_template in $TEMPLATE_FILES; do
@@ -32,12 +30,6 @@ phases:
       - echo mvn install
       - mvn install dockerfile:build
       - echo docker build
-      - echo "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
-      - $(aws ecr get-login --no-include-email)
-      - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
-      - echo "TAG"
-      - IMAGE_URI="${REPOSITORY_URI}:${TAG}"
-      - echo "$IMAGE_URI"
       - docker build --build-arg JAR_FILE=target/wixit-auth-0.1.0-SNAPSHOT.jar --build-arg CONFIG_FILE=externalConfigTemplate.yml --tag "$IMAGE_URI" .
       - echo "Copying child stack templates to S3 bucket"
       - |
