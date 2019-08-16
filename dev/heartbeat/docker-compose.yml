@@ -1,0 +1,10 @@
+version: "3.0"
+services:
+  heartbeat:
+    image: docker.elastic.co/beats/heartbeat:7.2.0
+    command: heartbeat -e -strict.perms=false
+    container_name: wixit-heartbeat
+    volumes:
+      - "/home/matus/Work/aws/wixit-auth/dev/heartbeat/config/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro"
+    network_mode: host
+

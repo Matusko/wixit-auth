@@ -1,0 +1,11 @@
+version: "3.0"
+services:
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.2.0
+    command: filebeat -e -strict.perms=false
+    container_name: wixit-filebeat
+    volumes:
+      - "/home/matus/Work/aws/wixit-auth/dev/filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml"
+      - "/home/matus/Work/aws/wixit-auth/logs/spring-boot-logger.log:/var/log/wixit-auth/spring-boot-logger.log"
+    links:
+      - logstash:logstash
