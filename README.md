@@ -33,3 +33,5 @@ before running locally make sure postgres and redis docker container is running
 **stop running container**
 
     docker stop ${containerId}
+    
+    TEEEEEEEEEEST

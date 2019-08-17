@@ -1,0 +1,8 @@
+heartbeat.monitors:
+  - type: http
+    schedule: '@every 5s'
+    urls: ["http://localhost:8080/test/actuator/health"]
+    check.response.status: 200
+
+output.elasticsearch:
+  hosts: '0.0.0.0:9200'
